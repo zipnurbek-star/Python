@@ -1,0 +1,1489 @@
+
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>🐍 Python Quest 2.0</title>
+
+<style>
+:root{
+  --bg:#0b1020;
+  --card:#151d35;
+  --card2:#1d2745;
+  --text:#eef3ff;
+  --muted:#9ca9c9;
+  --blue:#4b8bbe;
+  --yellow:#ffd43b;
+  --green:#2ecc71;
+  --red:#ff5577;
+  --purple:#9b7cff;
+  --cyan:#38d9ff;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at top,#182552 0,#0b1020 45%);
+  color:var(--text);
+  font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif;
+  line-height:1.6;
+}
+
+button,input{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:20px;
+}
+
+header{
+  padding:25px 0 15px;
+}
+
+h1{
+  font-size:2.2rem;
+  margin:0;
+}
+
+.subtitle{
+  color:var(--muted);
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:10px;
+  margin:15px 0;
+}
+
+.stat{
+  background:var(--card);
+  border-radius:16px;
+  padding:14px;
+}
+
+.stat strong{
+  display:block;
+  font-size:1.3rem;
+}
+
+.progress{
+  height:14px;
+  background:#0006;
+  border-radius:20px;
+  overflow:hidden;
+}
+
+.progress i{
+  display:block;
+  height:100%;
+  width:0;
+  background:linear-gradient(90deg,var(--blue),var(--yellow));
+  transition:.5s;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+  gap:12px;
+  margin-top:18px;
+}
+
+.lesson{
+  background:var(--card);
+  color:var(--text);
+  border:2px solid transparent;
+  border-radius:18px;
+  padding:16px;
+  text-align:left;
+  transition:.2s;
+}
+
+.lesson:hover{
+  transform:translateY(-3px);
+  border-color:var(--blue);
+}
+
+.lesson.done{
+  border-color:var(--green);
+}
+
+.lesson .emoji{
+  font-size:2rem;
+}
+
+.lesson h3{
+  margin:7px 0;
+}
+
+.lesson small{
+  color:var(--muted);
+}
+
+#content{
+  display:none;
+  background:var(--card);
+  margin-top:20px;
+  padding:22px;
+  border-radius:20px;
+}
+
+.back{
+  background:transparent;
+  border:1px solid #ffffff33;
+  color:var(--text);
+  padding:8px 13px;
+  border-radius:10px;
+}
+
+.primary{
+  background:var(--yellow);
+  color:#161616;
+  border:0;
+  border-radius:10px;
+  padding:10px 16px;
+  font-weight:700;
+}
+
+.secondary{
+  background:var(--blue);
+  color:white;
+  border:0;
+  border-radius:10px;
+  padding:10px 16px;
+  font-weight:700;
+}
+
+pre{
+  background:#070b17;
+  border:1px solid #ffffff12;
+  padding:16px;
+  border-radius:12px;
+  overflow:auto;
+  color:#dce8ff;
+}
+
+code{
+  color:#ffd43b;
+}
+
+.explain{
+  background:var(--card2);
+  border-left:4px solid var(--cyan);
+  padding:15px;
+  border-radius:10px;
+  margin:12px 0;
+}
+
+.tip{
+  background:#ffd43b18;
+  border-left:4px solid var(--yellow);
+  padding:13px;
+  border-radius:10px;
+}
+
+.danger{
+  background:#ff557718;
+  border-left:4px solid var(--red);
+  padding:13px;
+  border-radius:10px;
+}
+
+.choice{
+  display:block;
+  width:100%;
+  margin:8px 0;
+  padding:12px;
+  text-align:left;
+  color:var(--text);
+  background:transparent;
+  border:2px solid #ffffff33;
+  border-radius:12px;
+}
+
+.choice:hover{
+  border-color:var(--blue);
+}
+
+.choice.correct{
+  border-color:var(--green);
+  background:#2ecc7120;
+}
+
+.choice.wrong{
+  border-color:var(--red);
+  background:#ff557720;
+}
+
+textarea{
+  width:100%;
+  min-height:150px;
+  background:#070b17;
+  color:#dce8ff;
+  border:2px solid #ffffff22;
+  border-radius:12px;
+  padding:12px;
+  resize:vertical;
+}
+
+input{
+  background:#070b17;
+  color:white;
+  border:2px solid #ffffff33;
+  border-radius:9px;
+  padding:9px;
+}
+
+.code-game{
+  background:#10172b;
+  padding:15px;
+  border-radius:14px;
+  margin:15px 0;
+}
+
+.answer{
+  margin-top:8px;
+  font-weight:700;
+}
+
+.badge{
+  display:inline-block;
+  padding:4px 9px;
+  border-radius:20px;
+  background:#ffffff12;
+  color:var(--muted);
+}
+
+footer{
+  color:var(--muted);
+  text-align:center;
+  padding:35px 0;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<header>
+  <h1>🐍 Python Quest 2.0</h1>
+  <div class="subtitle">
+    Pythonni o‘yin orqali o‘rganing — nazariya, kod, mashqlar va missiyalar.
+  </div>
+</header>
+
+<div class="stats">
+
+  <div class="stat">
+    🏆 Daraja
+    <strong id="level">🐣 Boshlovchi</strong>
+  </div>
+
+  <div class="stat">
+    ⭐ XP
+    <strong id="xp">0 XP</strong>
+  </div>
+
+  <div class="stat">
+    🎯 Missiyalar
+    <strong id="completed">0 / 22</strong>
+  </div>
+
+  <div class="stat">
+    📈 Progress
+    <div class="progress">
+      <i id="progress"></i>
+    </div>
+  </div>
+
+</div>
+
+<button class="primary" onclick="reviewRandom()">
+  🔁 Tasodifiy takrorlash
+</button>
+
+<div class="grid" id="lessons"></div>
+
+<section id="content"></section>
+
+<footer>
+  🐍 Python Quest 2.0 — Kod yoz, xato qil, o‘rgan, yana urin!
+</footer>
+
+</div>
+
+<script>
+
+const lessons = [
+
+{
+id:1,
+emoji:"🚀",
+title:"Python bilan tanishuv",
+range:"1-3",
+description:"Python nima? Uni o‘rnatish, birinchi dastur va print().",
+
+sections:[
+
+{
+title:"Python nima?",
+text:`
+Python — yuqori darajadagi, o‘rganishga qulay dasturlash tili.
+U 1991-yilda Guido van Rossum tomonidan yaratilgan.
+
+Python quyidagi sohalarda ishlatiladi:
+
+• Web dasturlash
+• Sun’iy intellekt
+• Machine Learning
+• Telegram botlar
+• O‘yinlar
+• Avtomatlashtirish
+• Ma’lumotlar tahlili
+• Test yozish
+• Server dasturlash
+
+Pythonning eng katta afzalliklaridan biri — kodi odam o‘qishiga juda qulay.
+`
+},
+
+{
+title:"Birinchi Python dasturingiz",
+code:`print("Salom, dunyo!")`,
+explain:`
+print() — ekranga ma’lumot chiqaradi.
+
+Qavs ichidagi "Salom, dunyo!" esa string, ya’ni matn.
+
+Masalan:
+`
+},
+
+{
+title:"Ko‘proq print()",
+code:`print("Men Python o‘rganyapman")
+print("Bugun birinchi darsim")
+print(2026)
+print(10 + 5)
+print(10 * 3)`,
+explain:`
+print() faqat matn emas, hisoblangan natijani ham chiqaradi.
+`
+},
+
+{
+title:"Izoh yozish",
+code:`# Bu izoh
+print("Salom")
+
+print(5)  # Bu ham izoh`,
+explain:`
+# belgisi bilan yozilgan qism Python tomonidan bajarilmaydi.
+U dasturchiga tushuntirish berish uchun ishlatiladi.
+`
+},
+
+{
+title:"Pythonni ishga tushirish",
+code:`python --version
+
+python
+
+print("Salom")`,
+explain:`
+Terminalda python --version Python versiyasini ko‘rsatadi.
+
+.py faylni esa quyidagicha ishga tushirish mumkin:
+
+python main.py
+`
+}
+
+],
+
+quiz:[
+["Pythonni kim yaratgan?",["Guido van Rossum","Bill Gates","Mark Zuckerberg"],0],
+["Ekranga ma’lumot chiqarish funksiyasi?",["print()","show()","write()"],0],
+["Izoh belgisi?",["#","//","<!--"],0],
+["Python fayli kengaytmasi?",[".py",".python",".pt"],0],
+["10 + 5 natijasi?",["15","105","5"],0]
+],
+
+codeGames:[
+{
+question:"Ekranga Salom chiqaradigan kodni yozing.",
+answer:'print("Salom")'
+},
+{
+question:"5 + 7 natijasini chiqaradigan kod?",
+answer:"print(5 + 7)"
+}
+]
+
+},
+
+{
+id:2,
+emoji:"📦",
+title:"O‘zgaruvchilar va ma’lumot tiplari",
+range:"4-6",
+description:"int, float, str, bool, input() va type().",
+
+sections:[
+
+{
+title:"O‘zgaruvchi nima?",
+text:`
+O‘zgaruvchini ma’lumot solinadigan quti deb tasavvur qiling.
+
+Masalan:
+`
+},
+
+{
+title:"O‘zgaruvchi yaratish",
+code:`ism = "Ali"
+yosh = 15
+boy = 1.72
+talaba = True
+
+print(ism)
+print(yosh)
+print(boy)
+print(talaba)`,
+explain:`
+= belgisi matematikadagi tenglik emas.
+
+ism = "Ali"
+
+degani — "Ali" qiymatini ism nomli o‘zgaruvchiga joylashtirish.
+`
+},
+
+{
+title:"Asosiy ma’lumot tiplari",
+code:`yosh = 15          # int
+narx = 12.5         # float
+ism = "Ali"         # str
+talaba = True       # bool
+
+print(type(yosh))
+print(type(narx))
+print(type(ism))
+print(type(talaba))`
+},
+
+{
+title:"input()",
+code:`ism = input("Ismingiz: ")
+
+print("Salom", ism)`,
+explain:`
+input() foydalanuvchidan ma’lumot oladi.
+
+Muhim:
+input() natijasi odatda str bo‘ladi.
+`
+},
+
+{
+title:"Matnni songa aylantirish",
+code:`yosh = int(input("Yoshingiz: "))
+
+print(yosh + 1)`,
+explain:`
+Agar foydalanuvchi 15 kiritsa, input() uni "15" matn sifatida oladi.
+
+int() esa uni 15 soniga aylantiradi.
+`
+},
+
+{
+title:"Tiplarni almashtirish",
+code:`print(int("25"))
+print(float("3.14"))
+print(str(100))
+print(bool(1))
+print(bool(0))`
+}
+
+],
+
+quiz:[
+["15 ning tipi?",["int","str","float"],0],
+["3.14 ning tipi?",["float","int","bool"],0],
+['"Salom" tipi?',["str","int","bool"],0],
+["True tipi?",["bool","str","float"],0],
+["input() odatda nima qaytaradi?",["str","int","bool"],0],
+["int('10') natijasi?",["10 soni","'10' matni","Xato"],0]
+],
+
+codeGames:[
+{
+question:"Foydalanuvchi yoshini son sifatida oling.",
+answer:'yosh = int(input("Yosh: "))'
+},
+{
+question:"Ali ismli o‘zgaruvchi yarating.",
+answer:'ism = "Ali"'
+}
+]
+
+},
+
+{
+id:3,
+emoji:"🔤",
+title:"String — matnlar",
+range:"7",
+description:"Index, slicing, upper, lower, split, replace va f-string.",
+
+sections:[
+
+{
+title:"String nima?",
+text:`
+String — matn.
+
+Python'da string:
+"Salom"
+
+yoki:
+
+'Salom'
+
+ko‘rinishida yoziladi.
+`
+},
+
+{
+title:"Index",
+code:`s = "Python"
+
+print(s[0])
+print(s[1])
+print(s[2])
+print(s[-1])
+print(s[-2])`,
+explain:`
+Python indexni 0 dan boshlaydi.
+
+Python
+012345
+
+Shuning uchun s[0] — P.
+
+Manfiy index esa oxiridan sanaydi:
+-1 — n
+-2 — o
+`
+},
+
+{
+title:"Slicing",
+code:`s = "Python"
+
+print(s[0:2])
+print(s[1:4])
+print(s[:3])
+print(s[3:])
+print(s[::-1])`
+},
+
+{
+title:"String metodlari",
+code:`s = "salom dunyo"
+
+print(s.upper())
+print(s.lower())
+print(s.title())
+print(s.replace("salom","hello"))
+print(s.split())
+print(len(s))`
+},
+
+{
+title:"f-string",
+code:`ism = "Ali"
+yosh = 15
+
+print(f"Salom, {ism}!")
+print(f"Siz {yosh} yoshdasiz.")
+print(f"Kelasi yil {yosh + 1} yosh bo‘lasiz.")`,
+explain:`
+f-string ichida { } yordamida o‘zgaruvchini matnga joylashtirish mumkin.
+`
+}
+
+],
+
+quiz:[
+['"Python"[0] nima?',["P","y","n"],0],
+['"Python"[-1] nima?',["n","P","o"],0],
+['len("Salom")?',["5","4","6"],0],
+['"abc".upper()?',["ABC","abc","Abc"],0],
+["f-string ichida o‘zgaruvchi qaysi belgida?",["{}","[]","()"],0]
+],
+
+codeGames:[
+{
+question:'"PYTHON" so‘zini kichik harflarga o‘tkazing.',
+answer:'"PYTHON".lower()'
+},
+{
+question:'ism o‘zgaruvchisini f-string bilan chiqarish.',
+answer:'f"Salom, {ism}"'
+}
+]
+
+},
+
+{
+id:4,
+emoji:"🔢",
+title:"Sonlar va matematik amallar",
+range:"8-9",
+description:"+, -, *, /, //, %, **, round(), math.",
+
+sections:[
+
+{
+title:"Asosiy amallar",
+code:`print(10 + 3)
+print(10 - 3)
+print(10 * 3)
+print(10 / 3)
+print(10 // 3)
+print(10 % 3)
+print(2 ** 3)`,
+
+explain:`
++ qo‘shish
+- ayirish
+* ko‘paytirish
+/ bo‘lish
+// butun bo‘lish
+% qoldiq
+** daraja
+`
+},
+
+{
+title:"% operatori",
+code:`print(10 % 2)
+print(11 % 2)
+print(15 % 4)`,
+explain:`
+% qoldiqni beradi.
+
+10 % 2 = 0
+
+11 % 2 = 1
+
+Shuning uchun juft/toq tekshirishda juda foydali.
+`
+},
+
+{
+title:"Juft yoki toq",
+code:`son = 17
+
+if son % 2 == 0:
+    print("Juft")
+else:
+    print("Toq")`
+},
+
+{
+title:"Foydali matematik funksiyalar",
+code:`print(abs(-10))
+print(round(3.14159, 2))
+print(max(5, 10, 2))
+print(min(5, 10, 2))
+print(sum([1, 2, 3, 4]))`
+},
+
+{
+title:"math kutubxonasi",
+code:`import math
+
+print(math.sqrt(25))
+print(math.pi)
+print(math.floor(3.9))
+print(math.ceil(3.1))
+print(math.factorial(5))`
+}
+
+],
+
+quiz:[
+["7 // 2?",["3","3.5","4"],0],
+["7 % 2?",["1","3","0"],0],
+["2 ** 4?",["16","8","6"],0],
+["10 / 2 tipi?",["float","int","str"],0],
+["math.sqrt(25)?",["5.0","25","10"],0]
+],
+
+codeGames:[
+{
+question:"17 sonining qoldig‘ini 5 ga bo‘ling.",
+answer:"17 % 5"
+},
+{
+question:"25 ning kvadrat ildizini toping.",
+answer:"math.sqrt(25)"
+}
+]
+
+},
+
+{
+id:5,
+emoji:"🚦",
+title:"if / elif / else",
+range:"10-15",
+description:"Shartlar, taqqoslash va mantiqiy operatorlar.",
+
+sections:[
+
+{
+title:"Shart nima?",
+text:`
+Dastur qaror qabul qilishi uchun if ishlatiladi.
+
+Masalan:
+Agar yosh 18 dan katta bo‘lsa — "Katta".
+Aks holda — "Kichik".
+`
+},
+
+{
+title:"Oddiy if",
+code:`yosh = 20
+
+if yosh >= 18:
+    print("Siz voyaga yetgansiz.")`
+},
+
+{
+title:"if / else",
+code:`yosh = 15
+
+if yosh >= 18:
+    print("Kirish mumkin")
+else:
+    print("Kirish mumkin emas")`
+},
+
+{
+title:"elif",
+code:`ball = 85
+
+if ball >= 90:
+    print("A")
+elif ball >= 70:
+    print("B")
+elif ball >= 60:
+    print("C")
+else:
+    print("F")`
+},
+
+{
+title:"and / or / not",
+code:`yosh = 20
+talaba = True
+
+if yosh >= 18 and talaba:
+    print("Talaba kattalar guruhida")
+
+if yosh < 18 or talaba:
+    print("Shart bajarildi")
+
+if not talaba:
+    print("Talaba emas")`
+},
+
+{
+title:"Taqqoslash operatorlari",
+code:`a = 10
+b = 20
+
+print(a == b)
+print(a != b)
+print(a > b)
+print(a < b)
+print(a >= b)
+print(a <= b)`
+}
+
+],
+
+quiz:[
+["Tenglikni tekshirish?",["==","=","==="],0],
+["Teng emas?",["!=","<>","="],0],
+["Ikki shart ham rost bo‘lishi kerak?",["and","or","not"],0],
+["Bittasi rost bo‘lsa yetarli?",["or","and","not"],0],
+["Shartni teskarilash?",["not","reverse","!"],0]
+],
+
+codeGames:[
+{
+question:"18 yoshdan katta ekanini tekshiring.",
+answer:"if yosh >= 18:"
+},
+{
+question:"Son juft bo‘lsa 'Juft' chiqaring.",
+answer:'if son % 2 == 0:\n    print("Juft")'
+}
+]
+
+},
+
+{
+id:6,
+emoji:"🔁",
+title:"For sikli",
+range:"16-20",
+description:"range(), list bilan yurish, enumerate va ichma-ich sikl.",
+
+sections:[
+
+{
+title:"for nima?",
+text:`
+for bir nechta qiymat ustida takroran ishlash uchun ishlatiladi.
+`
+},
+
+{
+title:"range()",
+code:`for i in range(5):
+    print(i)`,
+explain:`
+Natija:
+
+0
+1
+2
+3
+4
+
+range(5) 5 ni o‘z ichiga olmaydi.
+`
+},
+
+{
+title:"range(start, stop)",
+code:`for i in range(1, 6):
+    print(i)`,
+},
+
+{
+title:"Qadam",
+code:`for i in range(0, 11, 2):
+    print(i)`,
+explain:`
+0, 2, 4, 6, 8, 10
+`
+},
+
+{
+title:"List bilan for",
+code:`mevalar = ["olma", "banan", "uzum"]
+
+for meva in mevalar:
+    print(meva)`
+},
+
+{
+title:"enumerate()",
+code:`mevalar = ["olma", "banan", "uzum"]
+
+for i, meva in enumerate(mevalar):
+    print(i, meva)`
+},
+
+{
+title:"Ichma-ich for",
+code:`for i in range(1, 4):
+    for j in range(1, 4):
+        print(i, j)`
+},
+
+{
+title:"Amaliy misol — ko‘paytirish jadvali",
+code:`son = 5
+
+for i in range(1, 11):
+    print(son, "x", i, "=", son * i)`
+}
+
+],
+
+quiz:[
+["range(3)?",["0,1,2","1,2,3","0,1,2,3"],0],
+["range(2,6)?",["2,3,4,5","2,3,4,5,6","1,2,3,4,5"],0],
+["for nima uchun?",["Takrorlash","Fayl ochish","Xato ushlash"],0],
+["enumerate() nima beradi?",["Index va qiymat","Faqat qiymat","Faqat index"],0]
+],
+
+codeGames:[
+{
+question:"0 dan 4 gacha chiqaradigan for yozing.",
+answer:"for i in range(5):\n    print(i)"
+},
+{
+question:"1 dan 10 gacha juft sonlarni chiqaring.",
+answer:"for i in range(2, 11, 2):\n    print(i)"
+}
+]
+
+},
+
+{
+id:7,
+emoji:"🌀",
+title:"while sikli",
+range:"21-23",
+description:"while, break, continue va cheksiz sikl.",
+
+sections:[
+
+{
+title:"while",
+code:`n = 5
+
+while n > 0:
+    print(n)
+    n -= 1`,
+explain:`
+while shart True bo‘lib turgan paytda ishlaydi.
+
+Eng muhim qoida:
+sikl ichida shartga ta’sir qiladigan qiymatni o‘zgartiring.
+`
+},
+
+{
+title:"Cheksiz sikl",
+code:`# DIQQAT!
+
+n = 5
+
+while n > 0:
+    print(n)
+    # n o'zgarmasa,
+    # sikl davom etaveradi`
+},
+
+{
+title:"break",
+code:`while True:
+    son = int(input("Son: "))
+
+    if son == 0:
+        break
+
+    print("Siz:", son, "kiritdingiz")`
+},
+
+{
+title:"continue",
+code:`for i in range(1, 11):
+
+    if i % 2 == 0:
+        continue
+
+    print(i)`,
+explain:`
+Bu kod faqat toq sonlarni chiqaradi.
+`
+}
+
+],
+
+quiz:[
+["while qachon ishlaydi?",["Shart rost bo‘lsa","Har doim bir marta","Faqat list bilan"],0],
+["Siklni to‘xtatadi?",["break","continue","stop"],0],
+["Joriy aylanishni tashlab ketadi?",["continue","break","skip"],0]
+],
+
+codeGames:[
+{
+question:"5 dan 1 gacha sanaydigan while yozing.",
+answer:"while n > 0:\n    print(n)\n    n -= 1"
+}
+]
+
+},
+
+{
+id:8,
+emoji:"🎒",
+title:"List — ro‘yxatlar",
+range:"24-28",
+description:"append, remove, pop, insert, sort, slicing.",
+
+sections:[
+
+{
+title:"List nima?",
+code:`mevalar = ["olma", "banan", "uzum"]
+
+print(mevalar)
+print(mevalar[0])
+print(mevalar[-1])`
+},
+
+{
+title:"Element qo‘shish",
+code:`mevalar = ["olma"]
+
+mevalar.append("banan")
+mevalar.append("uzum")
+
+print(mevalar)`
+},
+
+{
+title:"Element o‘chirish",
+code:`mevalar = ["olma", "banan", "uzum"]
+
+mevalar.remove("banan")
+
+print(mevalar)
+
+oxirgi = mevalar.pop()
+
+print(oxirgi)`
+},
+
+{
+title:"insert",
+code:`sonlar = [1, 2, 4]
+
+sonlar.insert(2, 3)
+
+print(sonlar)`
+},
+
+{
+title:"sort",
+code:`sonlar = [5, 1, 9, 2, 3]
+
+sonlar.sort()
+
+print(sonlar)
+
+sonlar.reverse()
+
+print(sonlar)`
+},
+
+{
+title:"List comprehension",
+code:`kvadratlar = [x ** 2 for x in range(1, 6)]
+
+print(kvadratlar)`,
+explain:`
+Natija:
+
+[1, 4, 9, 16, 25]
+
+List comprehension — list yaratishning juda qulay usuli.
+`
+}
+
+],
+
+quiz:[
+["Oxiriga qo‘shish?",["append()","add()","push()"],0],
+["Qiymat bo‘yicha o‘chirish?",["remove()","delete()","erase()"],0],
+["Oxirgi elementni olish/o‘chirish?",["pop()","last()","removeLast()"],0],
+["Saralash?",["sort()","order()","arrange()"],0]
+],
+
+codeGames:[
+{
+question:"List oxiriga 10 qo‘shing.",
+answer:"sonlar.append(10)"
+},
+{
+question:"Listni saralang.",
+answer:"sonlar.sort()"
+}
+]
+
+},
+
+{
+id:9,
+emoji:"🧩",
+title:"Tuple va Set",
+range:"29-30",
+description:"O‘zgarmas tuple va takrorlanmaydigan set.",
+
+sections:[
+
+{
+title:"Tuple",
+code:`meva = ("olma", "banan", "uzum")
+
+print(meva[0])
+print(len(meva))`,
+explain:`
+Tuple listga o‘xshaydi, lekin o‘zgartirib bo‘lmaydi.
+`
+},
+
+{
+title:"Set",
+code:`sonlar = {1, 2, 2, 3, 3, 3}
+
+print(sonlar)`,
+explain:`
+Set takroriy qiymatlarni saqlamaydi.
+`
+},
+
+{
+title:"Set amallari",
+code:`a = {1, 2, 3}
+b = {3, 4, 5}
+
+print(a | b)
+print(a & b)
+print(a - b)`
+}
+
+],
+
+quiz:[
+["Qaysi biri o‘zgarmas?",["tuple","list","dict"],0],
+["Set nimani yo‘qotadi?",["Takrorlarni","Sonlarni","Stringlarni"],0]
+],
+
+codeGames:[
+{
+question:"Takrorlarni olib tashlash uchun set ishlating.",
+answer:"set([1, 1, 2, 2, 3])"
+}
+]
+
+},
+
+{
+id:10,
+emoji:"🧙",
+title:"Funksiyalar",
+range:"31-35",
+description:"def, parameter, return, args va kwargs.",
+
+sections:[
+
+{
+title:"Funksiya nima?",
+code:`def salom():
+    print("Salom!")
+
+salom()
+salom()
+salom()`
+},
+
+{
+title:"Parametr",
+code:`def salom(ism):
+    print("Salom", ism)
+
+salom("Ali")
+salom("Vali")`
+},
+
+{
+title:"return",
+code:`def qosh(a, b):
+    return a + b
+
+natija = qosh(5, 7)
+
+print(natija)`,
+explain:`
+return funksiyadan natijani tashqariga qaytaradi.
+`
+},
+
+{
+title:"Default parameter",
+code:`def salom(ism="Do'st"):
+    print("Salom", ism)
+
+salom()
+salom("Ali")`
+},
+
+{
+title:"*args",
+code:`def yigindi(*sonlar):
+    return sum(sonlar)
+
+print(yigindi(1, 2))
+print(yigindi(1, 2, 3, 4, 5))`
+},
+
+{
+title:"**kwargs",
+code:`def malumot(**data):
+    print(data)
+
+malumot(ism="Ali", yosh=15, shahar="Samarqand")`
+}
+
+],
+
+quiz:[
+["Funksiya yaratish?",["def","function","fun"],0],
+["Natija qaytarish?",["return","send","back"],0],
+["Ko‘p positional argument?",["*args","**kwargs","args[]"],0],
+["Ko‘p named argument?",["**kwargs","*args","named[]"],0]
+],
+
+codeGames:[
+{
+question:"Ikki sonni qo‘shadigan funksiya yozing.",
+answer:"def qosh(a, b):\n    return a + b"
+},
+{
+question:"Kvadrat qaytaradigan funksiya.",
+answer:"def kvadrat(x):\n    return x ** 2"
+}
+]
+
+},
+
+{
+id:11,
+emoji:"🛡️",
+title:"Xatolar va try-except",
+range:"36-38",
+description:"Exception, ValueError, ZeroDivisionError, finally.",
+
+sections:[
+
+{
+title:"Xato nima?",
+code:`son = int("abc")`,
+explain:`
+Bu ValueError beradi, chunki "abc" son emas.
+`
+},
+
+{
+title:"try / except",
+code:`try:
+    son = int(input("Son: "))
+    print(10 / son)
+
+except ValueError:
+    print("Bu son emas!")
+
+except ZeroDivisionError:
+    print("0 ga bo‘lish mumkin emas!")`
+},
+
+{
+title:"finally",
+code:`try:
+    print("Ish boshlandi")
+
+except:
+    print("Xato")
+
+finally:
+    print("Bu har doim ishlaydi")`
+},
+
+{
+title:"Xatoni o‘zgaruvchiga olish",
+code:`try:
+    x = int("hello")
+except ValueError as e:
+    print("Xato:", e)`
+}
+
+],
+
+quiz:[
+["int('abc')?",["ValueError","TypeError","KeyError"],0],
+["5 / 0?",["ZeroDivisionError","ValueError","IndexError"],0],
+["Xatoni ushlash?",["try/except","if/else","for"],0],
+["Har doim bajariladigan blok?",["finally","else","catch"],0]
+],
+
+codeGames:[
+{
+question:"0 ga bo‘lish xatosini ushlang.",
+answer:"try:\n    x = 5 / 0\nexcept ZeroDivisionError:\n    print(\"Xato\")"
+}
+]
+
+},
+
+{
+id:12,
+emoji:"📁",
+title:"Fayllar bilan ishlash",
+range:"39-42",
+description:"open, read, write, append va with.",
+
+sections:[
+
+{
+title:"Faylga yozish",
+code:`with open("salom.txt", "w", encoding="utf-8") as f:
+    f.write("Salom Python!")`,
+explain:`
+w — write.
+
+Agar faylda eski ma’lumot bo‘lsa, uni almashtiradi.
+`
+},
+
+{
+title:"Faylni o‘qish",
+code:`with open("salom.txt", "r", encoding="utf-8") as f:
+    matn = f.read()
+
+print(matn)`
+},
+
+{
+title:"Oxiriga qo‘shish",
+code:`with open("salom.txt", "a", encoding="utf-8") as f:
+    f.write("\\nYangi qator")`
+},
+
+{
+title:"readline va readlines",
+code:`with open("data.txt", encoding="utf-8") as f:
+    print(f.readline())
+    print(f.readlines())`
+}
+
+],
+
+quiz:[
+["O‘qish rejimi?",["r","w","a"],0],
+["Yozish rejimi?",["w","r","read"],0],
+["Oxiriga qo‘shish?",["a","appendfile","w"],0],
+["Faylni avtomatik yopishga yordam beradi?",["with","closefile","auto"],0]
+],
+
+codeGames:[
+{
+question:"Faylga 'Salom' yozing.",
+answer:'with open("a.txt","w") as f:\n    f.write("Salom")'
+}
+]
+
+},
+
+{
+id:13,
+emoji:"🎲",
+title:"Kutubxonalar va import",
+range:"43-45",
+description:"import, random, math, datetime.",
+
+sections:[
+
+{
+title:"import",
+code:`import math
+
+print(math.sqrt(16))`
+},
+
+{
+title:"random",
+code:`import random
+
+print(random.randint(1, 6))
+
+mevalar = ["olma", "banan", "uzum"]
+
+print(random.choice(mevalar))`
+},
+
+{
+title:"shuffle",
+code:`import random
+
+kartalar = [1, 2, 3, 4, 5]
+
+random.shuffle(kartalar)
+
+print(kartalar)`
+},
+
+{
+title:"datetime",
+code:`from datetime import datetime
+
+hozir = datetime.now()
+
+print(hozir)
+print(hozir.year)
+print(hozir.month)
+print(hozir.day)`
+}
+
+],
+
+quiz:[
+["Kutubxona ulash?",["import","include","use"],0],
+["1-6 oralig‘ida tasodifiy son?",["random.randint(1,6)","random.number(1,6)","random.rand(6)"],0],
+["Tasodifiy list elementi?",["random.choice()","random.pick()","random.item()"],0]
+],
+
+codeGames:[
+{
+question:"1 dan 100 gacha tasodifiy son.",
+answer:"random.randint(1, 100)"
+}
+]
+
+},
+
+{
+id:14,
+emoji:"🧰",
+title:"os va pip",
+range:"46-47",
+description:"Fayl tizimi, papkalar va paket o‘rnatish.",
+
+sections:[
+
+{
+title:"os",
+code:`import os
+
+print(os.getcwd())
+print(os.listdir("."))`
+},
+
+{
+title:"Papka yaratish",
+code:
